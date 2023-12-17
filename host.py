@@ -18,6 +18,10 @@ with open('jokes.txt', 'r+') as file:
 def send_help(message):
     bot.reply_to(message, 'Вот мои команды: \n 1) /help - выводиться необходимая помощь специально для вас \n 2) /joke - выводиться одна из многочисленных шуток')
 
+@bot.message_handler(commands=['start'])
+def send_subscribe(message):
+    bot.send_message(message.chat.id, f"Привет {message.from_user.first_name} ! Это чат бот с многочисленными шутками, которые собираются каждый день! Что бы поддержать автора достаточно всего лишь подписаться на его Telegram канал. ССылка тут:")
+
 @bot.message_handler(commands=['joke', 'шутку'])
 def send_joke(message):
     # Открываем файл с шутками
