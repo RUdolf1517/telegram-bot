@@ -10,7 +10,7 @@ with open('jokes.txt', 'r+') as file:
     for i, line in enumerate(lines, 1):
         if line.startswith(f"{i}:"):
             line = line.split(":", 1)[1]  # Удаляем текущую нумерацию
-        file.write(f"{i}: {line}")
+        file.write(f"{i}:{line}")
 
     file.truncate()
 
@@ -21,6 +21,12 @@ def send_help(message):
 @bot.message_handler(commands=['start'])
 def send_subscribe(message):
     bot.send_message(message.chat.id, f"Привет {message.from_user.first_name} ! Это чат бот с многочисленными шутками, которые собираются каждый день! Что бы поддержать автора достаточно всего лишь подписаться на его Telegram канал. ССылка тут:")
+
+@bot.message_handler(commands=['amount_of_jokes'])
+def send_amount_of_jokes(message):
+    with open('jokes.txt', 'r') as file:
+        line_count = sum(1 for line in file)
+    bot.reply_to(message, f'кол-во шуток в базе: {line_count}')
 
 @bot.message_handler(commands=['joke', 'шутку'])
 def send_joke(message):
