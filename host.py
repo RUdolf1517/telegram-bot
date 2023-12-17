@@ -14,6 +14,10 @@ with open('jokes.txt', 'r+') as file:
 
     file.truncate()
 
+@bot.message_handler(commands=['помощь', 'help'])
+def send_help(message):
+    bot.reply_to(message, 'Вот мои команды: \n 1) /help - выводиться необходимая помощь специально для вас \n 2) /joke - выводиться одна из многочисленных шуток')
+
 @bot.message_handler(commands=['joke', 'шутку'])
 def send_joke(message):
     # Открываем файл с шутками
@@ -26,5 +30,5 @@ def send_joke(message):
     # Отправляем шутку пользователю
     bot.reply_to(message, joke)
 
-print("start")
-bot.polling()
+print("starting...")
+bot.infinity_polling(allowed_updates=None)
