@@ -1,8 +1,11 @@
 import telebot
 import random
 import io
+import time
 
 bot = telebot.TeleBot("6926925203:AAGilRh7PlJK9oFUZjcq8NcvlK1mMLznVkA")
+
+print("starting...")
 
 with io.open('jokes.txt', 'r+', encoding='utf-8', errors='ignore') as file:
     lines = file.readlines()
@@ -18,6 +21,8 @@ with io.open('jokes.txt', 'r+', encoding='utf-8', errors='ignore') as file:
 @bot.message_handler(commands=['помощь', 'help'])
 def send_help(message):
     bot.reply_to(message, 'Вот мои команды: \n 1) /help - выводиться необходимая помощь специально для вас \n 2) /joke - выводиться одна из многочисленных шуток')
+
+
 
 @bot.message_handler(commands=['start'])
 def send_subscribe(message):
@@ -44,5 +49,20 @@ def send_joke(message):
     # Отправляем шутку пользователю
     bot.reply_to(message, joke)
 
-print("starting...")
+
+def send_joke_to_channel():
+    with open('jokes.txt', 'r+', encoding='utf-8', errors='ignore') as file:
+        jokes = file.read().splitlines()
+        joke = random.choice(jokes)
+        bot.send_message('-1001997262813', joke)
+
+print("ready")
 bot.infinity_polling(allowed_updates=None)
+
+while True:
+    current_time = time.strftime("%H:%M", time.gmtime())
+    if current_time == "16:48" or '16:49' or '16:50':  # Установите желаемое время для отправки шутки
+        send_joke_to_channel()
+        time.sleep(60)  # Проверка времени каждую минуту
+
+
