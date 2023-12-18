@@ -1,9 +1,10 @@
 import telebot
 import random
+import io
 
 bot = telebot.TeleBot("6926925203:AAGilRh7PlJK9oFUZjcq8NcvlK1mMLznVkA")
 
-with open('jokes.txt', 'r+') as file:
+with io.open('jokes.txt', 'r+', encoding='utf-8', errors='ignore') as file:
     lines = file.readlines()
     file.seek(0)  # Перемещаем указатель в начало файла
 
@@ -24,14 +25,17 @@ def send_subscribe(message):
 
 @bot.message_handler(commands=['amount_of_jokes'])
 def send_amount_of_jokes(message):
-    with open('jokes.txt', 'r') as file:
-        line_count = sum(1 for line in file)
+    with open('jokes.txt', 'r+', encoding='utf-8', errors='ignore') as file:
+        line_count = 0
+        lines = file.readlines()
+        line_count = len(lines)
     bot.reply_to(message, f'кол-во шуток в базе: {line_count}')
+
 
 @bot.message_handler(commands=['joke', 'шутку'])
 def send_joke(message):
     # Открываем файл с шутками
-    with open('jokes.txt', 'r', encoding='utf-8') as file:
+    with open('jokes.txt', 'r+', encoding='utf-8', errors='ignore') as file:
         jokes = file.readlines()
 
     # Выбираем случайную шутку
