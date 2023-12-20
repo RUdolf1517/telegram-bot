@@ -1,4 +1,5 @@
 import telebot
+from telebot import types
 import random
 import io
 import time
@@ -22,11 +23,9 @@ with io.open('jokes.txt', 'r+', encoding='utf-8', errors='ignore') as file:
 def send_help(message):
     bot.reply_to(message, 'Вот мои команды: \n 1) /help - выводиться необходимая помощь специально для вас \n 2) /joke - выводиться одна из многочисленных шуток')
 
-
-
 @bot.message_handler(commands=['start'])
 def send_subscribe(message):
-    bot.send_message(message.chat.id, f"Привет {message.from_user.first_name} ! Это чат бот с многочисленными шутками, которые собираются каждый день! Что бы поддержать автора достаточно всего лишь подписаться на его Telegram канал. ССылка тут:")
+    bot.send_message(message.chat.id, f"Привет {message.from_user.first_name}! Это чат бот с многочисленными шутками, которые собираются каждый день! Что бы поддержать автора достаточно всего лишь подписаться на его Telegram канал. ССылка тут: https://t.me/txhtrh")
 
 @bot.message_handler(commands=['amount_of_jokes'])
 def send_amount_of_jokes(message):
@@ -61,8 +60,8 @@ bot.infinity_polling(allowed_updates=None)
 
 while True:
     current_time = time.strftime("%H:%M", time.gmtime())
-    if current_time == "16:48" or '16:49' or '16:50':  # Установите желаемое время для отправки шутки
+    if current_time == "9:30" or current_time == "13:30" or current_time == "20:23":  # Установите желаемое время для отправки шутки
         send_joke_to_channel()
-        time.sleep(60)  # Проверка времени каждую минуту
+        time.sleep(30)  # Проверка времени
 
 
