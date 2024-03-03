@@ -4,7 +4,7 @@ import random
 import io
 import time
 
-bot = telebot.TeleBot("6926925203:AAGilRh7PlJK9oFUZjcq8NcvlK1mMLznVkA")
+bot = telebot.TeleBot("")
 
 print("starting...")
 
